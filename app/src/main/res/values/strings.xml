@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Mi Calculadora IMC</string>
+    <string name="txt_historial">Historial</string>
+    <string name="txt_hola">Hola %1$s</string>
+    <string name="txt_peso">Peso</string>
+    <string name="txt_Estatura">Estatura</string>
+    <string name="txt_calcularIMC">Calcular IMC</string>
+    <string name="txt_respuesta">Respuesta</string>
+    <string name="txt_regUser">Registro de Usuario</string>
+    <string name="txt_ingName">Ingresa tu nombre</string>
+    <string name="txt_registrar">Registrar</string>
+    <string name="txtH_usuario">Usuario: %1$s</string>
+    <string name="txtH_Peso">Peso: %1$s kg</string>
+    <string name="txtH_Estatura">Estatura: %1$s m</string>
+    <string name="txtH_IMC">IMC: %1$s</string>
+    <string name="txt_bajoPeso">Bajo peso</string>
+    <string name="txt_normal">Normal</string>
+    <string name="txt_sobrepeso">Sobrepeso</string>
+    <string name="txt_obecidad">Obecidad</string>
+    <string name="txt_tuIMC">Tu IMC es: %1$s</string>
+    <string name="txt_clasificacion">Clasificación: %1$s</string>
+    <string name="txt_val1">Por favor ingresa valores válidos</string>
+</resources>

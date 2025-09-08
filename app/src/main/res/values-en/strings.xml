@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Calculator IMC</string>
+    <string name="txt_historial">History</string>
+    <string name="txt_hola">Hello %1$s</string>
+    <string name="txt_peso">Weight</string>
+    <string name="txt_Estatura">Height</string>
+    <string name="txt_calcularIMC">Calculate IMC</string>
+    <string name="txt_respuesta">Response</string>
+    <string name="txt_regUser">Sing up</string>
+    <string name="txt_ingName">Write your name</string>
+    <string name="txt_registrar">Sing up</string>
+    <string name="txtH_usuario">User: %1$s</string>
+    <string name="txtH_Peso">Weight: %1$s kg</string>
+    <string name="txtH_Estatura">Height: %1$s m</string>
+    <string name="txtH_IMC">IMC: %1$s</string>
+    <string name="txt_bajoPeso">Low weight</string>
+    <string name="txt_normal">Normal</string>
+    <string name="txt_sobrepeso">Overweight</string>
+    <string name="txt_obecidad">Obesity</string>
+    <string name="txt_tuIMC">Your IMC is: %1$s</string>
+    <string name="txt_clasificacion">Classification: %1$s</string>
+    <string name="txt_val1">Please enter valid values</string>
+</resources>
