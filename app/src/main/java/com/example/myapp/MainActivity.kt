@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.content.SharedPreferences
 import android.content.Intent
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Date
 // Importamos los botones y widgets
@@ -44,8 +45,10 @@ class MainActivity : AppCompatActivity() {
         val dbHelper = HistorialDBHelper(this)
         // Boton principal
         button.setOnClickListener {
-            val peso = editTextPeso.text.toString().toDoubleOrNull()
-            val estatura = editTextEstatura.text.toString().toDoubleOrNull()
+            Log.d("DEBUG_IMC", "Holaaaaa 👋")
+            val peso = editTextPeso.text.toString().replace(",",".").toDoubleOrNull()
+            val estatura = editTextEstatura.text.toString().replace(",",".").toDoubleOrNull()
+            Log.d("DEBUG_IMC", "Input peso: $peso, Input estatura: $estatura")
             // Obtener fecha y hora actuales
             val fecha = SimpleDateFormat("yyyy-MM-dd").format(Date())
             val hora = SimpleDateFormat("HH:mm:ss").format(Date())
@@ -55,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 val imcDosDecimales = String.format("%.2f", imc) // devuelve String
 
                 // Mostrar resultado con 2 decimales
-//                textView.text = "Tu IMC es: %.2f".format(imc)
+                // textView.text = "Tu IMC es: %.2f".format(imc)
                 textView.text = getString(R.string.txt_tuIMC, imcDosDecimales.toString())
                 // Clasificación del IMC (opcional)
                 val clasificacion = when {
@@ -66,9 +69,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 // Guardamos en sqlite
-                dbHelper.insertarHistorial(userName, fecha, hora, peso, estatura, imcDosDecimales.toDouble())
+                dbHelper.insertarHistorial(userName, fecha, hora, peso, estatura, imc)
 
                 textView.append("\n" + getString(R.string.txt_clasificacion, clasificacion))
+                Log.d("DEBUG_IMC", "IMC guardado: $imc")
             } else {
                 textView.text = getString(R.string.txt_val1)
             }
