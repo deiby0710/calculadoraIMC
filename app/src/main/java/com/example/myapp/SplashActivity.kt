@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
 import android.os.Looper
 import android.content.Intent
-import android.content.SharedPreferences
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,24 +13,20 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         // Esperar 2 segundos y abrir MainActivity
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val auth = FirebaseAuth.getInstance()
+            val currentUser = auth.currentUser
 
-            // Revisar SharedPreferences
-            val prefs: SharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-            val userName = prefs.getString("userName", null)
-
-            // Decidir a dónde ir
-            if (userName.isNullOrEmpty()) {
-                // No registrado -> ir a RegisterActivity
-                startActivity(Intent(this, RegisterActivity::class.java))
+            if (currentUser != null) {
+                // Usuario ya logueado → ir directo a MainActivity
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             } else {
-                // Ya registrado -> ir a MainActivity
-                startActivity(Intent(this, MainActivity::class.java))
+                // No hay usuario logueado → ir a Login
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
             }
 
-            // Cerrar Splash
-            finish()
+            finish() // Cerramos Splash para que no vuelva atrás
         }, 3000) // 2000 ms = 2 segundos
     }
 }

@@ -23,15 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_LongOut"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageButton
         android:id="@+id/btnHistorial"
@@ -45,11 +36,11 @@
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/btnEditarUsuario"
-        android:layout_width="59dp"
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="50dp"
         android:layout_height="64dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/user"
+        android:src="@drawable/back"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints" />

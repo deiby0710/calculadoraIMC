@@ -45,12 +45,15 @@ class MainActivity : AppCompatActivity() {
         // 🔹 Mostrar saludo con el nombre (displayName)
         textWelcome.text = getString(R.string.txt_hola, currentUser.displayName ?: "Usuario")
 
-        // 🔹 Botón para editar usuario → ir a RegisterActivity
-        val btnEditarUsuario: ImageButton = findViewById(R.id.btnEditarUsuario)
-        btnEditarUsuario.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+        // Botón logout (ImageButton con icono que tú definas)
+        val btnCerrarSesion: ImageButton = findViewById(R.id.btnCerrarSesion)
+        btnCerrarSesion.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
+            finish()
         }
+
 
         // Guardar en SQLite
         val dbHelper = HistorialDBHelper(this)
@@ -106,15 +109,6 @@ class MainActivity : AppCompatActivity() {
         btnHistorial.setOnClickListener {
             val intent = Intent(this, HistorialActivity::class.java)
             startActivity(intent)
-        }
-
-        // Botón Cerrar Sesión
-        val btnLogout: Button = findViewById(R.id.btnLogout)
-        btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-            finish()
         }
 
     }
