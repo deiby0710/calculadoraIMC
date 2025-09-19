@@ -6,7 +6,7 @@
     <string name="txt_Estatura">Estatura</string>
     <string name="txt_calcularIMC">Calcular IMC</string>
     <string name="txt_respuesta">Respuesta</string>
-    <string name="txt_regUser">Registro de Usuario</string>
+    <string name="txt_regUser">Crear cuenta</string>
     <string name="txt_ingName">Ingresa tu nombre</string>
     <string name="txt_registrar">Registrar</string>
     <string name="txtH_usuario">Usuario: %1$s</string>
@@ -20,4 +20,8 @@
     <string name="txt_tuIMC">Tu IMC es: %1$s</string>
     <string name="txt_clasificacion">Clasificación: %1$s</string>
     <string name="txt_val1">Por favor ingresa valores válidos</string>
+    <string name="txt_email">Correo</string>
+    <string name="txt_password">Contraseña</string>
+    <string name="txt_volver">Volver</string>
+    <string name="txt_LongOut">Cerrar sesión</string>
 </resources>

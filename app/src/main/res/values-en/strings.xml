@@ -21,4 +21,8 @@
     <string name="txt_tuIMC">Your IMC is: %1$s</string>
     <string name="txt_clasificacion">Classification: %1$s</string>
     <string name="txt_val1">Please enter valid values</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_volver">Come Back</string>
+    <string name="txt_LongOut">Long Out</string>
 </resources>

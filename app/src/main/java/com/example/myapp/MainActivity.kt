@@ -1,66 +1,76 @@
 package com.example.myapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.content.SharedPreferences
-import android.content.Intent
-import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Date
-// Importamos los botones y widgets
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.ImageButton
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // 🔹 Inicializar FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+        // Si no hay usuario, volver al login
+        if (currentUser == null) {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         val editTextPeso: EditText = findViewById(R.id.inputPeso)
         val editTextEstatura: EditText = findViewById(R.id.inputEstatura)
         val button: Button = findViewById(R.id.btn1)
         val textView: TextView = findViewById(R.id.textView2)
         val textWelcome: TextView = findViewById(R.id.textViewSaludo)
 
-        // Capturamos el nombre y lo mostramos
-        val prefs: SharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-        val userName = prefs.getString("userName", "Usuario") ?: "Usuario"
+        // 🔹 Mostrar saludo con el nombre (displayName)
+        textWelcome.text = getString(R.string.txt_hola, currentUser.displayName ?: "Usuario")
 
-        textWelcome.text = getString(R.string.txt_hola,userName)
-
-        // Cambiar nombre
-
+        // 🔹 Botón para editar usuario → ir a RegisterActivity
         val btnEditarUsuario: ImageButton = findViewById(R.id.btnEditarUsuario)
-
         btnEditarUsuario.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
         // Guardar en SQLite
         val dbHelper = HistorialDBHelper(this)
-        // Boton principal
+
+        // 🔹 Botón principal (calcular IMC)
         button.setOnClickListener {
             Log.d("DEBUG_IMC", "Holaaaaa 👋")
-            val peso = editTextPeso.text.toString().replace(",",".").toDoubleOrNull()
-            val estatura = editTextEstatura.text.toString().replace(",",".").toDoubleOrNull()
+            val peso = editTextPeso.text.toString().replace(",", ".").toDoubleOrNull()
+            val estatura = editTextEstatura.text.toString().replace(",", ".").toDoubleOrNull()
             Log.d("DEBUG_IMC", "Input peso: $peso, Input estatura: $estatura")
-            // Obtener fecha y hora actuales
+
             val fecha = SimpleDateFormat("yyyy-MM-dd").format(Date())
             val hora = SimpleDateFormat("HH:mm:ss").format(Date())
-            if (peso != null && estatura != null && estatura > 0) {
-                // Calcular IMC
-                val imc = peso / (estatura * estatura)
-                val imcDosDecimales = String.format("%.2f", imc) // devuelve String
 
-                // Mostrar resultado con 2 decimales
-                // textView.text = "Tu IMC es: %.2f".format(imc)
-                textView.text = getString(R.string.txt_tuIMC, imcDosDecimales.toString())
-                // Clasificación del IMC (opcional)
+            if (peso != null && estatura != null && estatura > 0) {
+                val imc = peso / (estatura * estatura)
+                val imcDosDecimales = String.format("%.2f", imc)
+
+                textView.text = getString(R.string.txt_tuIMC, imcDosDecimales)
+
                 val clasificacion = when {
                     imc < 18.5 -> getString(R.string.txt_bajoPeso)
                     imc < 24.9 -> getString(R.string.txt_normal)
@@ -68,8 +78,15 @@ class MainActivity : AppCompatActivity() {
                     else -> getString(R.string.txt_obecidad)
                 }
 
-                // Guardamos en sqlite
-                dbHelper.insertarHistorial(userName, fecha, hora, peso, estatura, imc)
+                // Guardar en sqlite usando el nombre del usuario logueado
+                dbHelper.insertarHistorial(
+                    currentUser.displayName ?: "Anon",
+                    fecha,
+                    hora,
+                    peso,
+                    estatura,
+                    imc
+                )
 
                 textView.append("\n" + getString(R.string.txt_clasificacion, clasificacion))
                 Log.d("DEBUG_IMC", "IMC guardado: $imc")
@@ -77,17 +94,28 @@ class MainActivity : AppCompatActivity() {
                 textView.text = getString(R.string.txt_val1)
             }
         }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // HISTORIAL
+        // 🔹 Botón Historial
         val btnHistorial: ImageButton = findViewById(R.id.btnHistorial)
         btnHistorial.setOnClickListener {
             val intent = Intent(this, HistorialActivity::class.java)
             startActivity(intent)
         }
+
+        // Botón Cerrar Sesión
+        val btnLogout: Button = findViewById(R.id.btnLogout)
+        btnLogout.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 }
