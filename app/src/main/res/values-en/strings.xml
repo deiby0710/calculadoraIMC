@@ -25,4 +25,8 @@
     <string name="txt_password">Password</string>
     <string name="txt_volver">Come Back</string>
     <string name="txt_LongOut">Long Out</string>
+    <string name="txt_bienvenido">Welcome</string>
+    <string name="txt_IniciarSesión">Sign in</string>
+    <string name="txt_registrate">Don\'t have an account? Sign up</string>
+    <string name="txt_google">Continue with Google</string>
 </resources>
