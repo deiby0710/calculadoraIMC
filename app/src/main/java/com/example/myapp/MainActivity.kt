@@ -43,7 +43,13 @@ class MainActivity : AppCompatActivity() {
         val textWelcome: TextView = findViewById(R.id.textViewSaludo)
 
         // 🔹 Mostrar saludo con el nombre (displayName)
-        textWelcome.text = getString(R.string.txt_hola, currentUser.displayName ?: "Usuario")
+
+        val fullName = currentUser.displayName ?: "Usuario"
+        val parts = fullName.split(" ") // divide el nombre por espacios
+        val firstTwoNames = parts.take(2).joinToString(" ") // toma los 2 primeros y los une
+
+        textWelcome.text = getString(R.string.txt_hola, firstTwoNames)
+//        textWelcome.text = getString(R.string.txt_hola, currentUser.displayName ?: "Usuario")
 
         // Botón logout (ImageButton con icono que tú definas)
         val btnCerrarSesion: ImageButton = findViewById(R.id.btnCerrarSesion)
